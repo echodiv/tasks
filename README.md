@@ -3,3 +3,4 @@
 
 ### Algorithms:
 1. binary search
+2. selection sort
