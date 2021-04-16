@@ -15,7 +15,7 @@ def binary_search(sorted_list: list[int], to_find: int) -> bool:
         if to_find < current:
             high = current - 1
             continue
-    return None
+    return False
 
 
 def test():
