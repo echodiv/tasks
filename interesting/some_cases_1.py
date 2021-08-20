@@ -5,7 +5,9 @@ TODO:
     ---
     2. Опишите, как бы вы использовали один одномерный
     массив для реализации трех стеков.
-
+    ---
+    3.Имеется файл размером 20 Гбайт, состоящий из строк.
+    Как бы вы выполнили сортировку такого файла?
 """
 import typing as t
 import copy
@@ -121,6 +123,61 @@ def x_o_check_result(data: t.List[t.List[int]]) -> int:
         if result['d_one'] == 3 or result['d_two'] == 3:
             return player
     return 0
+
+
+def robot_move(field: t.List[t.List[int]]) -> str:
+    """Робот стоит в левом верхнем углу сетки, состоящей из r строк и k
+    столбцов. Робот может перемещаться в двух направлениях: вправо и вниз,
+    но некоторые ячейки сетки заблокированы, то есть робот через них проходить
+    не может. Разработайте алгоритм построения маршрута от левого верхнего
+    до правого нижнего угла.
+    input:
+    [[0, 1, 0, 0],
+     [0, 0, 0, 0],
+     [0, 0, 1, 0],
+     [1, 0, 1, 0],
+     [0, 1, 1, 0]]
+    где 0 - поле доступное для робота
+        1 - поле недоступное для робота
+    """
+    def is_free(x, y, field):
+        return not bool(field[y][x])
+
+    def get_path(
+            x: int,
+            y: int,
+            field: t.List[t.List[int]],
+            path: t.List[t.List[int]]
+    ) -> t.List[t.List[int]]:
+        path.append([x, y])
+        if not x and not y:
+            return True, path
+
+        success = False
+        if x >= 1 and is_free(x-1, y, field):
+            success, path = get_path(x-1, y, field, path)
+        if not success and y >= 1 and is_free(x, y-1, field):
+            success, path = get_path(x, y-1, field, path)
+        if not success:
+            path.pop(-1)
+        return success, path
+
+    y = len(field) - 1
+    x = len(field[0]) - 1
+    return get_path(x, y, field, [])
+
+
+def test_robot_move():
+    data = [
+        [0, 1, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 1, 0],
+        [1, 0, 1, 0],
+        [0, 1, 0, 0]
+    ]
+    res_path = [[3, 4], [3, 3], [3, 2], [3, 1], [2, 1], [1, 1], [0, 1], [0, 0]]
+    success, res = robot_move(data)
+    assert success and res == res_path
 
 
 def test_swap_function():
