@@ -11,6 +11,7 @@ TODO:
 """
 import typing as t
 import copy
+import unittest
 
 
 def swap(a: t.List[int], b: t.List[int]) -> t.Union[t.List[int], t.List[int]]:
@@ -165,6 +166,39 @@ def robot_move(field: t.List[t.List[int]]) -> str:
     y = len(field) - 1
     x = len(field[0]) - 1
     return get_path(x, y, field, [])
+
+
+def fizz_bazz_print(length: int, rules: t.List[t.Dict]) -> None:
+    """Напишите программу, которая выводит на экран числа от 1 до 100.
+    При этом вместо чисел, кратных трем, программа должна
+    выводить слово «Fizz», а вместо чисел, кратных пяти — слово «Buzz».
+    Если число кратно и 3, и 5, то программа должна выводить слово
+    «FizzBuzz»."""
+    rules = copy.deepcopy(rules)
+    length += 1 if length else length
+    for i in range(1, length):
+        for rule in rules:
+            if all(not i % index for index in rule['indexes']):
+                print(rule['text'])
+                break
+        else:
+            print(i)
+
+
+@unittest.skip("Just print")
+def test_fizz_bazz_print():
+    data = [
+        {
+            "indexes": [3, 5], "text": "FizzBuzz"
+        },
+        {
+            "indexes": [3], "text": "Fizz"
+        },
+        {
+            "indexes": [5], "text": "Buzz"
+        },
+    ]
+    fizz_bazz_print(100, data)
 
 
 def test_robot_move():
