@@ -2,7 +2,7 @@ import typing as t
 from functools import reduce
 
 
-def cut_lines_int(start, end, *sublines):
+def cut_lines_int(start: int, end: int, *sublines: t.List[int]) -> int:
     """Задача «Отрезки»
     Есть произвольно задаваемый основной отрезок A-B,
     и есть N — количество произвольно задаваемых дополнительных отрезков.
@@ -29,7 +29,9 @@ def cut_lines_int(start, end, *sublines):
     )) + 1
 
 
-def cut_lines_with_float(start, end, *sublines):
+def cut_lines_with_float(
+        start: float, end: float, *sublines: t.List[float]
+) -> float:
     """Вариация задачи "Отрезки". Входные данные с плавающей точкой
     """
     sublines = sorted(list(sublines), key=lambda x: (x[0], x[1]))
@@ -51,7 +53,17 @@ def cut_lines_with_float(start, end, *sublines):
     return round(size, 2)
 
 
-def test_simple_cut_lines_int():
+def byte_sum(this: int, new: int) -> int:
+    """Напишите функцию суммирования двух целых чисел без использования
+    «+» и других арифметических операторов."""
+    if not new:
+        return this
+    summary = this ^ new
+    carry = (this & new) << 1
+    return byte_sum(summary, carry)
+
+
+def test_simple_cut_lines_int() -> None:
     res = cut_lines_int(
         1, 10, [2, 4]
     )
@@ -59,7 +71,17 @@ def test_simple_cut_lines_int():
     assert res == 8, f"{res=}"
 
 
-def test_cut_lines_int():
+def test_byte_sum() -> None:
+    res = byte_sum(2, 2)
+    assert res == 4, f"{res=}"
+
+
+def test_byte_sum_with_carry() -> None:
+    res = byte_sum(44, 22)
+    assert res == 66, f"{res=}"
+
+
+def test_cut_lines_int() -> None:
     res = cut_lines_int(
         15, 165, [37, 68], [52, 74], [118, 146], [35, 44], [37, 65], [46, 74]
     )
@@ -67,7 +89,7 @@ def test_cut_lines_int():
     assert res == 83, f"{res=}"
 
 
-def test_cut_lines_with_float():
+def test_cut_lines_with_float() -> None:
     res = cut_lines_with_float(
         1.3, 10.3, [2.6, 4.5], [1.5, 4.5], [7.1, 8], [7.5, 8.9]
     )
