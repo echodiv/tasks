@@ -1,4 +1,7 @@
-def binary_search(sorted_list: list[int], to_find: int) -> bool:
+import typing as t
+
+
+def binary_search(sorted_list: t.List[int], to_find: int) -> bool:
     """
     O = log(n)
     """
@@ -18,10 +21,24 @@ def binary_search(sorted_list: list[int], to_find: int) -> bool:
     return False
 
 
-def test():
+def recursive_binary_search(sorted_list: t.List[int], to_find: int) -> bool:
+    index = len(sorted_list) // 2
+    if not index:
+        return False
+    if to_find > sorted_list[index]:
+        return recursive_binary_search(sorted_list[index:], to_find)
+    elif to_find < sorted_list[index]:
+        return recursive_binary_search(sorted_list[:index + 1], to_find)
+    elif to_find == sorted_list[index]:
+        return True
+    return False
+
+
+def test_recursive_binary_search():
+    assert recursive_binary_search([1, 2, 3, 4, 5], 5), 'not found'
+    assert not (recursive_binary_search([1, 2, 3, 4, 5], 10)), 'found'
+
+
+def test_binary_search():
     assert binary_search([1,2,3,4,5], 5), 'not found'
     assert not(binary_search([1,2,3,4,5], 10)), 'found'
-
-
-if __name__ == '__main__':
-    test()
