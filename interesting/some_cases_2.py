@@ -63,6 +63,80 @@ def byte_sum(this: int, new: int) -> int:
     return byte_sum(summary, carry)
 
 
+def intersection_of_many(one: t.List[int], two: t.List[int]) -> t.List[int]:
+    """Нужно вернуть пересечение множеств, но с повторением элементов."""
+    one = one.copy()
+    two = two.copy()
+    res = []
+    for element in one:
+        if element in two:
+            two.pop(two.index(element))
+            res.append(element)
+    return res
+
+
+def zip_list_of_int(data: t.List[int]) -> str:
+    """Дан список целых чисел, повторяющихся элементов в списке нет.
+    Нужно преобразовать это множество в строку, сворачивая соседние по
+    числовому ряду числа в диапазоны.
+    Примеры:
+    [1,4,5,2,3,9,8,11,0] => "0-5,8-9,11"
+    [1,4,3,2] => "1-4"
+    [1,4] => "1,4" """
+    pass
+
+
+def max_line_of_int(data: t.List[int]) -> int:
+    """Дан массив из нулей и единиц. Нужно определить, какой максимальный по
+    длине подинтервал единиц можно получить, удалив ровно один элемент массива.
+    [1, 1, 0] """
+    pass
+
+
+def hotel_max_people(data: t.List[t.Tuple[int]]) -> int:
+    """Даны даты заезда и отъезда каждого гостя.
+    Для каждого гостя дата заезда строго раньше даты отъезда
+    (то есть каждый гость останавливается хотя бы на одну ночь).
+    В пределах одного дня считается, что сначала старые гости выезжают,
+    а затем въезжают новые. Найти максимальное число постояльцев, которые
+    одновременно проживали в гостинице (считаем, что измерение количества
+    постояльцев происходит в конце дня).
+
+    sample = [ (1, 2), (1, 3), (2, 4), (2, 3), ]"""
+    pass
+
+
+def group_words_by_liters(data: t.List[str]) -> t.List[t.List[str]]:
+    """Сгруппировать слова по общим буквам
+    Sample Input ["eat", "tea", "tan", "ate", "nat", "bat"]
+    Sample Output [ ["ate", "eat", "tea"], ["nat", "tan"], ["bat"] ]
+    """
+    pass
+
+
+def swap_string(one: str, two: str) -> bool:
+    """Даны две строки. Написать функцию, которая вернёт True, если из первой
+    строки можно получить вторую, совершив не более 1 изменения
+    (== удаление / замена символа).
+    """
+    pass
+
+
+def get_range_for_target_sum(data: t.List[int], target: int) -> t.List[int]:
+    """Дан список интов и число-цель. Нужно найти такой range, чтобы сумма
+    его элементов давала число-цель.
+
+    elements = [1, -3, 4, 5]
+    target = 9
+    result = range(2, 4) # because elements[2] + elements[3] == target"""
+    pass
+
+
+def test_intersection_of_many() -> None:
+    res = intersection_of_many([1, 2, 3, 2, 0], [5, 1, 2, 7, 3, 2])
+    assert sorted(res) == [1, 2, 2, 3], "res="
+
+
 def test_simple_cut_lines_int() -> None:
     res = cut_lines_int(
         1, 10, [2, 4]
