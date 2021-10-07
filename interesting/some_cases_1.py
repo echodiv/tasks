@@ -35,9 +35,7 @@ def is_all_symbols_are_unique(string: str) -> bool:
 def swap_lines_and_tables_to_zeros(table: t.List[t.List[int]]) -> None:
     """Напишите алгоритм, реализующий следующее условие: если элемент
     матрицы MxN равен 0, то весь столбец и вся строка обнуляются."""
-    indexes = [
-        set(), set()
-    ]
+    indexes = [set(), set()]
     x, y = len(table[0]), len(table)
 
     for i, line in enumerate(table):
@@ -63,10 +61,10 @@ def swap_lines_and_tables_to_zeros(table: t.List[t.List[int]]) -> None:
 
 def zip_string(string: str) -> str:
     """Реализуйте метод для выполнения простейшего сжатия строк с
-     использованием счетчика повторяющихся символов. Например, строка
-     ааbсссссааа превращается в а2b1с5а3. Если сжатая строка не становится
-     короче исходной, то метод возвращает исходную строку. Предполагается, что
-     строка состоит только из букв верхнего и нижнего регистра (a-z)."""
+    использованием счетчика повторяющихся символов. Например, строка
+    ааbсссссааа превращается в а2b1с5а3. Если сжатая строка не становится
+    короче исходной, то метод возвращает исходную строку. Предполагается, что
+    строка состоит только из букв верхнего и нижнего регистра (a-z)."""
     counter = 0
     prev = ""
     res = ""
@@ -90,7 +88,7 @@ def delete_repeated_data(data: t.List) -> None:
     for element in data:
         if data.count(element) > 1:
             for i in range(data.count(element) - 1):
-                data.pop(data.index(data.index(element)+1, element))
+                data.pop(data.index(data.index(element) + 1, element))
 
 
 def x_o_check_result(data: t.List[t.List[int]]) -> int:
@@ -109,19 +107,19 @@ def x_o_check_result(data: t.List[t.List[int]]) -> int:
                 return player
 
             if data[i][i] == player:
-                result['d_one'] += 1
+                result["d_one"] += 1
 
-            if data[2-i][2-i] == player:
-                result['d_two'] += 1
+            if data[2 - i][2 - i] == player:
+                result["d_two"] += 1
 
             for j, point in enumerate(line):
                 if point == player:
-                    result['column'][j] += 1
+                    result["column"][j] += 1
 
-                if result['column'][j] == 3:
+                if result["column"][j] == 3:
                     return player
 
-        if result['d_one'] == 3 or result['d_two'] == 3:
+        if result["d_one"] == 3 or result["d_two"] == 3:
             return player
     return 0
 
@@ -141,24 +139,22 @@ def robot_move(field: t.List[t.List[int]]) -> str:
     где 0 - поле доступное для робота
         1 - поле недоступное для робота
     """
+
     def is_free(x, y, field):
         return not bool(field[y][x])
 
     def get_path(
-            x: int,
-            y: int,
-            field: t.List[t.List[int]],
-            path: t.List[t.List[int]]
+        x: int, y: int, field: t.List[t.List[int]], path: t.List[t.List[int]]
     ) -> t.List[t.List[int]]:
         path.append([x, y])
         if not x and not y:
             return True, path
 
         success = False
-        if x >= 1 and is_free(x-1, y, field):
-            success, path = get_path(x-1, y, field, path)
-        if not success and y >= 1 and is_free(x, y-1, field):
-            success, path = get_path(x, y-1, field, path)
+        if x >= 1 and is_free(x - 1, y, field):
+            success, path = get_path(x - 1, y, field, path)
+        if not success and y >= 1 and is_free(x, y - 1, field):
+            success, path = get_path(x, y - 1, field, path)
         if not success:
             path.pop(-1)
         return success, path
@@ -178,8 +174,8 @@ def fizz_bazz_print(length: int, rules: t.List[t.Dict]) -> None:
     length += 1 if length else length
     for i in range(1, length):
         for rule in rules:
-            if all(not i % index for index in rule['indexes']):
-                print(rule['text'])
+            if all(not i % index for index in rule["indexes"]):
+                print(rule["text"])
                 break
         else:
             print(i)
@@ -188,27 +184,15 @@ def fizz_bazz_print(length: int, rules: t.List[t.Dict]) -> None:
 @unittest.skip("Just print")
 def test_fizz_bazz_print():
     data = [
-        {
-            "indexes": [3, 5], "text": "FizzBuzz"
-        },
-        {
-            "indexes": [3], "text": "Fizz"
-        },
-        {
-            "indexes": [5], "text": "Buzz"
-        },
+        {"indexes": [3, 5], "text": "FizzBuzz"},
+        {"indexes": [3], "text": "Fizz"},
+        {"indexes": [5], "text": "Buzz"},
     ]
     fizz_bazz_print(100, data)
 
 
 def test_robot_move():
-    data = [
-        [0, 1, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 1, 0],
-        [1, 0, 1, 0],
-        [0, 1, 0, 0]
-    ]
+    data = [[0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 1, 0], [1, 0, 1, 0], [0, 1, 0, 0]]
     res_path = [[3, 4], [3, 3], [3, 2], [3, 1], [2, 1], [1, 1], [0, 1], [0, 0]]
     success, res = robot_move(data)
     assert success and res == res_path
@@ -260,6 +244,10 @@ def test_delete_repeated_data():
 
     delete_repeated_data(data)
     assert data == exp_res
+
+    d = [1, 1, 1, 1]
+    delete_repeated_data(d)
+    assert d == [1]
 
 
 def test_x_o_check_result_column():
